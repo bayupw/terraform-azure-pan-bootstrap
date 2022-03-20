@@ -62,18 +62,22 @@ resource "azurerm_storage_share_file" "init-cfg_txt" {
   path             = "config"
   storage_share_id = azurerm_storage_share.this.id
   source           = "${path.module}/init-cfg.txt"
-}
 
-/* data "template_file" "bootstrap_xml" {
-  template = file("${path.module}/bootstrap.tmpl")
-} */
+  depends_on = [azurerm_storage_share_directory.bootstrap_folders]
+}
 
 resource "azurerm_storage_share_file" "bootstrap_xml" {
   name             = "bootstrap.xml"
   path             = "config"
   storage_share_id = azurerm_storage_share.this.id
   source           = "${path.module}/bootstrap.xml"
+
+    depends_on = [azurerm_storage_share_directory.bootstrap_folders]
 }
+
+/* data "template_file" "bootstrap_xml" {
+  template = file("${path.module}/bootstrap.tmpl")
+} */
 
 /* resource "azurerm_storage_share_file" "bootstrap_xml" {
   name             = "bootstrap.xml"
@@ -100,8 +104,6 @@ resource "azurerm_storage_share_file" "bootstrap_xml" {
     }
   )
 } */
-
-
 
 /* resource "azurerm_storage_share_directory" "config" {
   name                 = "config"

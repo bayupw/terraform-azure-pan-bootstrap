@@ -13,7 +13,7 @@ variable "location" {
 # 3-21 characters + 3 characters from random_string.this
 variable "bootstrap_storage" {
   type        = string
-  default     = "pan"
+  default     = "panboostrapstorage"
   description = "Bootstrap storage account name"
 }
 
@@ -25,7 +25,7 @@ variable "min_tls_version" {
 
 variable "bootstrap_share" {
   type        = string
-  default     = "pan"
+  default     = "pan-bootstrap-share"
   description = "Bootstrap storage file share name"
 }
 
