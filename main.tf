@@ -57,26 +57,30 @@ resource "azurerm_storage_share_directory" "bootstrap_folders" {
   depends_on = [azurerm_storage_share.this]
 }
 
-/* resource "azurerm_storage_share_file" "init-cfg_txt" {
+resource "azurerm_storage_share_file" "init-cfg_txt" {
   name             = "init-cfg.txt"
   path             = "config"
   storage_share_id = azurerm_storage_share.this.id
   source           = "${path.module}/init-cfg.txt"
-} */
+}
 
 data "template_file" "bootstrap_xml" {
-  template = file("${path.module}/b.tmpl")
-/*   vars = {
-    "config_version"           = var.config_version,
-    "detail_version"           = var.detail_version,
-    "admin_user"               = var.admin_user,
-    "admin_password_phash"     = var.admin_password_phash,
-    "admin_public_key"         = var.admin_public_key,
-    "admin_api_user"           = var.admin_api_user,
-    "admin_api_profile_name"   = var.admin_api_profile_name,
-    "admin_api_password_phash" = var.admin_api_password_phash
-  } */
+  template = file("${path.module}/bootstrap.tmpl")
 }
+
+resource "azurerm_storage_share_file" "bootstrap_xml" {
+  name             = "bootstrap.xml"
+  path             = "config"
+  storage_share_id = azurerm_storage_share.this.id
+  source           = "${path.module}/bootstrap.xml"
+}
+
+/* resource "azurerm_storage_share_file" "bootstrap_xml" {
+  name             = "bootstrap.xml"
+  path             = "config"
+  storage_share_id = azurerm_storage_share.this.id
+  source           = data.template_file.bootstrap_xml.rendered
+} */
 
 /* resource "azurerm_storage_share_file" "bootstrap_xml" {
   name             = "bootstrap.xml"
@@ -97,12 +101,7 @@ data "template_file" "bootstrap_xml" {
   )
 } */
 
-resource "azurerm_storage_share_file" "bootstrap2_xml" {
-  name             = "bootstrap.xml"
-  path             = "config"
-  storage_share_id = azurerm_storage_share.this.id
-  source           = data.template_file.bootstrap_xml.rendered
-}
+
 
 /* resource "azurerm_storage_share_directory" "config" {
   name                 = "config"
