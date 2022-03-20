@@ -6,11 +6,8 @@ output "storage_share_name" {
   value = azurerm_storage_share.this.name
 }
 
-/* 
-output "aws_iam_role" {
-  value = aws_iam_role.this
+output "primary_access_key" {
+  description = "Primary access key"
+  value       = azurerm_storage_account.this.primary_access_key
+  sensitive   = true
 }
-
-output "aws_iam_instance_profile" {
-  value = aws_iam_instance_profile.this
-} */
