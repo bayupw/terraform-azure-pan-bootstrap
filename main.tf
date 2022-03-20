@@ -64,9 +64,9 @@ resource "azurerm_storage_share_file" "init-cfg_txt" {
   source           = "${path.module}/init-cfg.txt"
 }
 
-data "template_file" "bootstrap_xml" {
+/* data "template_file" "bootstrap_xml" {
   template = file("${path.module}/bootstrap.tmpl")
-}
+} */
 
 resource "azurerm_storage_share_file" "bootstrap_xml" {
   name             = "bootstrap.xml"
